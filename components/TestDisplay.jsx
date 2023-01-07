@@ -5,7 +5,7 @@ const TestDisplay = () => {
 
   const data = JSON.parse(output);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>

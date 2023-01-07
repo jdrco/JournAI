@@ -1,6 +1,7 @@
 import React from "react";
 import { auth } from "../firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
+import TestDisplay from "./TestDisplay";
 
 const HomePage = () => {
   const [user] = useAuthState(auth);
@@ -18,6 +19,7 @@ const HomePage = () => {
             Sign Out
           </button>
         </div>
+        <TestDisplay />
       </div>
     </>
   );

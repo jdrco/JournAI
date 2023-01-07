@@ -2,6 +2,7 @@ import { auth } from "../firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import TestDisplay from "./TestDisplay";
 import React, { useState } from "react";
+import LoadingPage from "./LoadingPage";
 
 const HomePage = () => {
   const [input, setInput] = useState("");

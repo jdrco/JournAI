@@ -1,14 +1,18 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "../styles/Home.module.css";
+import { auth } from "../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import HomePage from "../components/HomePage";
+import LandingPage from "../components/LandingPage";
 
-const inter = Inter({ subsets: ["latin"] });
+const Home = () => {
+  const [user, loading, error] = useAuthState(auth);
 
-export default function Home() {
-  return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
-  );
-}
+  if (loading) {
+    return <div className="text-center">Loading...</div>;
+  }
+
+  if (error) throw error;
+
+  return <div>{user ? <HomePage /> : <LandingPage />}</div>;
+};
+
+export default Home;

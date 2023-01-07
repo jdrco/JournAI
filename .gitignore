@@ -28,5 +28,8 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# virtual environment for ml server
+ml-server/venv
+
 # vercel
 .vercel

@@ -34,7 +34,7 @@ const HomePage = () => {
           <BarChart data={data} />
         </div>
         <TestDisplay />
-        <Input />
+        <Input user = { user }/>
       </div>
     </>
   );

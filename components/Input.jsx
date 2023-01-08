@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { db } from '../firebase/firebaseApp';
+import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 
-const Input = () => {
+const Input = ({ user }) => {
   const [input, setInput] = useState('');
 
   // create entry
@@ -8,6 +10,10 @@ const Input = () => {
     e.preventDefault(e);
 
     /* database stuff with firbase */
+    if (input === '') {
+      alert("Please add a valid entry.");
+      return; // check this
+    }
 
     /* make API call to ml-server */
     fetch('http://127.0.0.1:7860/run/predict', {
@@ -20,9 +26,20 @@ const Input = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then(async (data) => {
         console.log(data.data[0]);
+        let date = new Date();
+        let entry = {
+          uid: user.uid,
+          date: `${date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()}`,
+          entry: input,
+          emotions: JSON.parse(`${data.data[0].replace(/'/g, '"')}`)
+        }
+        await addDoc(collection(db, "entries"), entry);
       });
+    
+    // dbRef = collection(db, "entries");
+    // await addDoc(dbRef, data)
   };
 
   return (

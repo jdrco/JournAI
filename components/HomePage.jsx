@@ -11,8 +11,10 @@ const HomePage = () => {
   const [user] = useAuthState(auth);
   console.log(entries);
 
-  // read from database
-  useEffect(() => {
+  const queryRange = (range) => {
+    const curr_date = new Date();
+    const last_date = new Date(curr_date.getTime() - range * 86400000);
+
     const q = query(collection(db, 'entries')); // need to convert
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -20,10 +22,26 @@ const HomePage = () => {
       querySnapshot.forEach((doc) => {
         entriesArr.push({ ...doc.data(), id: doc.id });
       });
-      setEntries(entriesArr.filter((doc) => doc.uid === user.uid));
+      setEntries(
+        entriesArr.filter(
+          (doc) =>
+            doc.uid === user.uid &&
+            doc.date >= last_date &&
+            doc.date <= curr_date
+        )
+      );
     });
 
     return () => unsubscribe();
+  };
+
+  function onClick(range) {
+    queryRange(range);
+  }
+
+  // read from database
+  useEffect(() => {
+    queryRange(1); // always want 1 day data showing on fresh render
   }, []);
 
   // calculation for entries
@@ -140,6 +158,17 @@ const HomePage = () => {
             <Input user={user} />
           </div>
         </div>
+        <div className="flex">
+          <button onClick={() => onClick(1)}>1 Day</button>
+          <button onClick={() => onClick(7)}>1 Week</button>
+          <button onClick={() => onClick(30)}>1 Month</button>
+          <button onClick={() => onClick(90)}>3 Months</button>
+          <button onClick={() => onClick(180)}>6 Months</button>
+        </div>
+        <div>
+          <Donut data={data} />
+        </div>
+        <Input user={user} />
       </div>
     </>
   );

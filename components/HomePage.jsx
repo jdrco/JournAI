@@ -2,6 +2,7 @@ import { auth, db } from '../firebase/firebaseApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
+import DonutChart from "./DonutChart";
 import Input from './Input';
 import { query, collection, onSnapshot } from 'firebase/firestore';
 
@@ -18,6 +19,15 @@ const HomePage = () => {
     return a.label.localeCompare(b.label);
   });
 
+  const data2 = [
+    { value: 0.40888, },
+    { value: 0.3247 },
+    { value: 0.13414 },
+    { value: 0.039807 },
+    { value: 0.034087 },
+    { value: 0.031259},
+    { value: 0.027106}
+  ];
   // read from database
   useEffect(() => {
     const q = query(collection(db, 'entries')); // need to convert
@@ -47,6 +57,7 @@ const HomePage = () => {
         </div>
         <div>
           <BarChart data={data} />
+          <DonutChart data={data2} />
         </div>
         <Input user={user} />
       </div>

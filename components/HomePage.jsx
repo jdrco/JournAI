@@ -1,8 +1,7 @@
 import { auth, db } from '../firebase/firebaseApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import React, { useState, useEffect } from 'react';
-import BarChart from './BarChart';
-import DonutChart from "./DonutChart";
+import Donut from './Donut';
 import Input from './Input';
 import { query, collection, onSnapshot } from 'firebase/firestore';
 
@@ -11,23 +10,6 @@ const HomePage = () => {
   const [user] = useAuthState(auth);
   console.log(entries);
 
-  //Here for testing purposes with barchart element rigidity
-  let output = `[{"label": "sadness", "score": 0.4088817834854126}, {"label": "neutral", "score": 0.32471874356269836}, {"label": "surprise", "score": 0.13414035737514496}, {"label": "joy", "score": 0.03980706259608269}, {"label": "anger", "score": 0.034086793661117554}, {"label": "fear", "score": 0.03125927224755287}, {"label": "disgust", "score": 0.027105990797281265}]`;
-  const data = JSON.parse(output);
-
-  data.sort(function (a, b) {
-    return a.label.localeCompare(b.label);
-  });
-
-  const data2 = [
-    { value: 0.40888, },
-    { value: 0.3247 },
-    { value: 0.13414 },
-    { value: 0.039807 },
-    { value: 0.034087 },
-    { value: 0.031259},
-    { value: 0.027106}
-  ];
   // read from database
   useEffect(() => {
     const q = query(collection(db, 'entries')); // need to convert
@@ -43,6 +25,59 @@ const HomePage = () => {
     return () => unsubscribe();
   }, []);
 
+  // calculation for entries
+  let emotionCalc = {
+    sadness: 0,
+    neutral: 0,
+    surprise: 0,
+    joy: 0,
+    anger: 0,
+    fear: 0,
+    disgust: 0,
+  };
+
+  entries.forEach((entry) => {
+    entry.emotions.forEach((emotion) => {
+      emotionCalc[emotion.label] += emotion.score;
+    });
+  });
+
+  for (const key in emotionCalc) {
+    emotionCalc[key] /= entries.length;
+  }
+
+  console.log(emotionCalc);
+  let labelsArr = Object.keys(emotionCalc);
+  let scoreArr = Object.values(emotionCalc);
+
+  const data = {
+    labels: labelsArr,
+    datasets: [
+      {
+        label: 'ferta',
+        //   data: [12, 19, 3, 5, 2, 3],
+        data: scoreArr,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-center items-center">
@@ -56,8 +91,7 @@ const HomePage = () => {
           </button>
         </div>
         <div>
-          <BarChart data={data} />
-          <DonutChart data={data2} />
+          <Donut data={data} />
         </div>
         <Input user={user} />
       </div>

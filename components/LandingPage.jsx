@@ -23,7 +23,7 @@ const LandingPage = () => {
       </div>
 
       <div className="bg-transparent w-screen h-[92%] flex flex-col lg:flex-row">
-        <div className="bg-inherit h-[50%] flex flex-col justify-center items-center lg:items-baseline lg:ml-60 px-8 lg:h-[100%] lg:w-1/2">
+        <div className="bg-inherit h-[50%] flex flex-col justify-center items-center lg:items-baseline lg:ml-40 px-8 lg:h-[100%] lg:w-1/2">
           <div className="font-PlayfairDisplay bg-transparent mb-4 font-bold text-6xl lg:w-80 text-center lg:text-left">
             It's time for reflection.
           </div>

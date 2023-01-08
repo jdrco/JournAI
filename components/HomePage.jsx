@@ -27,7 +27,7 @@ const HomePage = () => {
       querySnapshot.forEach((doc) => {
         entriesArr.push({ ...doc.data(), id: doc.id });
       });
-      setEntries(entriesArr.filter((doc) => doc.uid));
+      setEntries(entriesArr.filter((doc) => doc.uid === user.uid));
     });
 
     return () => unsubscribe();
@@ -48,7 +48,7 @@ const HomePage = () => {
         <div>
           <BarChart data={data} />
         </div>
-        <Input user = { user }/>
+        <Input user={user} />
       </div>
     </>
   );

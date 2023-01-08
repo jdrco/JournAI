@@ -31,7 +31,7 @@ const Input = ({ user }) => {
         let date = new Date();
         let entry = {
           uid: user.uid,
-          date: `${date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()}`,
+          date: date.getTime(),
           entry: input,
           emotions: JSON.parse(`${data.data[0].replace(/'/g, '"')}`)
         }

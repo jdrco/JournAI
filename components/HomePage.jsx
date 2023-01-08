@@ -1,9 +1,9 @@
-import { auth, db } from '../firebase/firebaseApp';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import React, { useState, useEffect } from 'react';
-import Donut from './Donut';
-import Input from './Input';
-import { query, collection, onSnapshot } from 'firebase/firestore';
+import { auth, db } from "../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useState, useEffect } from "react";
+import Donut from "./Donut";
+import Input from "./Input";
+import { query, collection, onSnapshot } from "firebase/firestore";
 
 const HomePage = () => {
   const [entries, setEntries] = useState([]);
@@ -12,7 +12,7 @@ const HomePage = () => {
 
   // read from database
   useEffect(() => {
-    const q = query(collection(db, 'entries')); // need to convert
+    const q = query(collection(db, "entries")); // need to convert
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let entriesArr = [];
@@ -54,24 +54,26 @@ const HomePage = () => {
     labels: labelsArr,
     datasets: [
       {
-        label: 'ferta',
+        label: "ferta",
         //   data: [12, 19, 3, 5, 2, 3],
         data: scoreArr,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          "rgba(53, 55, 27)",
+          "rgba(132, 172, 206)",
+          "rgba(130, 113, 145)",
+          "rgba(125, 29, 63)",
+          "rgba(226, 161, 141)",
+          "rgba(255, 132, 31)",
+          "rgba(61, 28, 0)",
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+          "rgba(53, 55, 27)",
+          "rgba(132, 172, 206)",
+          "rgba(130, 113, 145)",
+          "rgba(125, 29, 63)",
+          "rgba(226, 161, 141)",
+          "rgba(255, 132, 31)",
+          "rgba(61, 28, 0)",
         ],
         borderWidth: 1,
       },

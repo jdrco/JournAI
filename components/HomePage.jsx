@@ -1,14 +1,14 @@
-import { auth } from '../firebase/firebaseApp';
+import { auth, db } from '../firebase/firebaseApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import TestDisplay from './TestDisplay';
-import React, { useState } from 'react';
-import LoadingPage from './LoadingPage';
+import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
-import { sort } from 'd3';
 import Input from './Input';
+import { query, collection, onSnapshot } from 'firebase/firestore';
 
 const HomePage = () => {
+  const [entries, setEntries] = useState([]);
   const [user] = useAuthState(auth);
+  console.log(entries);
 
   //Here for testing purposes with barchart element rigidity
   let output = `[{"label": "sadness", "score": 0.4088817834854126}, {"label": "neutral", "score": 0.32471874356269836}, {"label": "surprise", "score": 0.13414035737514496}, {"label": "joy", "score": 0.03980706259608269}, {"label": "anger", "score": 0.034086793661117554}, {"label": "fear", "score": 0.03125927224755287}, {"label": "disgust", "score": 0.027105990797281265}]`;
@@ -17,6 +17,21 @@ const HomePage = () => {
   data.sort(function (a, b) {
     return a.label.localeCompare(b.label);
   });
+
+  // read from database
+  useEffect(() => {
+    const q = query(collection(db, 'entries')); // need to convert
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let entriesArr = [];
+      querySnapshot.forEach((doc) => {
+        entriesArr.push({ ...doc.data(), id: doc.id });
+      });
+      setEntries(entriesArr.filter((doc) => doc.uid));
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
@@ -33,7 +48,6 @@ const HomePage = () => {
         <div>
           <BarChart data={data} />
         </div>
-        <TestDisplay />
         <Input user = { user }/>
       </div>
     </>

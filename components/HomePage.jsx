@@ -169,6 +169,7 @@ const HomePage = () => {
           <Donut data={data} />
         </div>
         <Input user={user} />
+        <img src="../StacyIllustrations/Writing.png" alt="Writing"></img>
       </div>
     </>
   );

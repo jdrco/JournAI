@@ -38,10 +38,17 @@ const LandingPage = () => {
           </button>
         </div>
 
-        <div className="bg-transparent text-center flex flex-col gap-4 items-center h-[50%] lg:h-[100%] lg:w-1/2"></div>
+        <div className="bg-transparent text-center flex flex-col gap-4 items-center h-[50%] lg:h-[100%] lg:w-1/2">
+          <img src="/writing.png" alt="Writing" width="200px"></img>
+        </div>
+        <div>
+            
+        </div>
       </div>
     </div>
   );
 };
 
 export default LandingPage;
+
+

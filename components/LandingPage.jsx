@@ -25,11 +25,13 @@ const LandingPage = () => {
       <div className="bg-transparent w-screen h-[92%] flex flex-col lg:flex-row">
         <div className="bg-inherit h-[50%] flex flex-col justify-center items-center lg:items-baseline lg:ml-60 px-8 lg:h-[100%] lg:w-1/2">
           <div className="font-PlayfairDisplay bg-transparent mb-4 font-bold text-6xl lg:w-80 text-center lg:text-left">
-            Our Mission Statement
+            It's time for reflection.
           </div>
-          <div className="mb-4 text-2xl lg:w-80">Lorem Ipsum Dolorum Est</div>
+          <div className="font-SourceSansPro mb-4 text-2xl lg:w-80">
+            Data about your health, not your wealth.
+          </div>
           <button
-            className="bg-[#5e5d5c] w-[220px] h-[80px] rounded-md text-2xl text-white"
+            className="bg-[#5e5d5c] hover:bg-black w-[220px] h-[80px] rounded-md text-2xl text-white"
             onClick={redirectToSignIn}
           >
             Sign In

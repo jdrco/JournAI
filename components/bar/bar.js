@@ -21,44 +21,35 @@ class Bar extends React.Component {
       .selectAll('.bar')
       .data(data)
       //.transition(t)
-      .attr('y', d => yScale(d.value))
-      .attr('height', d => height - yScale(d.value));
+      .attr('y', (d) => yScale(d.score))
+      .attr('height', (d) => height - yScale(d.score));
   }
   init() {
-    const {
-      xScale, yScale, data, height,
-    } = this.props;
+    const { xScale, yScale, data, height } = this.props;
     const node = this.ref.current;
 
     // prepare initial data from where transition starts.
-    const initialData = data.map(obj => ({
-      name: obj.name,
-      value: 0
+    const initialData = data.map((obj) => ({
+      label: obj.label,
+      score: 0,
     }));
 
     // prepare the field
-    const bar = select(node)
-      .selectAll('.bar')
-      .data(initialData);
+    const bar = select(node).selectAll('.bar').data(initialData);
 
     // add rect to svg
     bar
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', d => xScale(d.name))
+      .attr('x', (d) => xScale(d.label))
       .attr('y', height)
-      .attr('width', xScale.bandwidth())
+      .attr('width', xScale.bandwidth());
 
     this.barTransition();
   }
   render() {
-    return (
-      <g
-        className="bar-group"
-        ref={this.ref}
-      />
-    );
+    return <g className="bar-group" ref={this.ref} />;
   }
 }
 

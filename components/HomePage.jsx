@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Donut from './Donut';
 import Input from './Input';
 import { query, collection, onSnapshot } from 'firebase/firestore';
+import { BarChart } from './Barchart';
 
 const HomePage = () => {
   const [entries, setEntries] = useState([]);
@@ -21,11 +22,18 @@ const HomePage = () => {
       querySnapshot.forEach((doc) => {
         entriesArr.push({ ...doc.data(), id: doc.id });
       });
-      setEntries(entriesArr.filter((doc) => (doc.uid === user.uid && doc.date >= last_date && doc.date <= curr_date)));
+      setEntries(
+        entriesArr.filter(
+          (doc) =>
+            doc.uid === user.uid &&
+            doc.date >= last_date &&
+            doc.date <= curr_date
+        )
+      );
     });
 
     return () => unsubscribe();
-  }
+  };
 
   function onClick(range) {
     queryRange(range);
@@ -65,9 +73,10 @@ const HomePage = () => {
     labels: labelsArr,
     datasets: [
       {
-        label: 'ferta',
+        label: 'Emotion',
         //   data: [12, 19, 3, 5, 2, 3],
         data: scoreArr,
+        hoverOffset: 10,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -89,17 +98,65 @@ const HomePage = () => {
     ],
   };
 
+  const options = {
+    plugins: {
+      responive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: 'right',
+        labels: {
+          padding: 10,
+        },
+      },
+    },
+  };
+
+  const optionsBar = {
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false,
+          },
+        },
+      ],
+      yAxes: [
+        {
+          gridLines: {
+            display: false,
+          },
+        },
+      ],
+    },
+  };
   return (
     <>
-      <div className="w-screen h-screen flex flex-col justify-center items-center">
-        <div className="text-center mb-6 text-sm bg-sky-100 p-3 rounded-md">
-          <div className="mb-1 text-blue-500">Hello, {user?.displayName}</div>
-          <button
-            onClick={() => auth.signOut()}
-            className="hover:underline text-red-500"
-          >
-            Sign Out
-          </button>
+      <div className="w-screen h-screen flex flex-col items-center">
+        <nav class="font-sans flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-4 px-6 bg-white shadow sm:items-baseline w-full">
+          <div class="mb-2 sm:mb-0">
+            <div class="text-2xl no-underline text-grey-darkest hover:text-blue-dark">
+              Hello, {user.displayName}
+            </div>
+          </div>
+          <div>
+            <button
+              onClick={() => auth.signOut()}
+              className="hover:underline text-slate-500"
+            >
+              Sign Out
+            </button>
+          </div>
+        </nav>
+
+        <div className="w-full h-full flex flex-row">
+          <div className=" w-1/2 h-full flex justify-center items-center">
+            <Donut data={data} options={options} />
+          </div>
+
+          <div className=" h-full w-1/2 flex flex-col">
+            <div className="w-full h-1/2"></div>
+            <Input user={user} />
+          </div>
         </div>
         <div className="flex">
           <button onClick={() => onClick(1)}>1 Day</button>

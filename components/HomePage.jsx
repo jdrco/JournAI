@@ -1,11 +1,8 @@
-import { auth } from '../firebase/firebaseApp';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import TestDisplay from './TestDisplay';
-import React, { useState } from 'react';
-import LoadingPage from './LoadingPage';
-import BarChart from './BarChart';
-import { sort } from 'd3';
-import Input from './Input';
+import { auth } from "../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import React from "react";
+import BarChart from "./BarChart";
+import Input from "./Input";
 
 const HomePage = () => {
   const [user] = useAuthState(auth);
@@ -33,7 +30,6 @@ const HomePage = () => {
         <div>
           <BarChart data={data} />
         </div>
-        <TestDisplay />
         <Input />
       </div>
     </>

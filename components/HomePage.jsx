@@ -1,7 +1,10 @@
-import { auth } from "../firebase/firebaseApp";
+import { auth, db } from "../firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import TestDisplay from "./TestDisplay";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import BarChart from "./BarChart";
+import DonutChart from "./DonutChart";
+import Input from "./Input";
+import { query, collection, onSnapshot } from "firebase/firestore";
 
 const HomePage = () => {
   const [input, setInput] = useState("");

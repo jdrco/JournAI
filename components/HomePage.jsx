@@ -52,6 +52,8 @@ const HomePage = () => {
           >
             Sign Out
           </button>
+        </div>
+        <div>
           <BarChart data/>
         </div>
         <TestDisplay />

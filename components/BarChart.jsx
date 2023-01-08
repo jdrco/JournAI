@@ -33,7 +33,7 @@ class BarChart extends Component {
           left: 40,
         };
         const ticks = 6;
-        const t = transition().duration(1000);
+        const t = transition().duration(1500);
     
         const width = parentWidth - margin.left - margin.right;
         const height = parentWidth * 0.5 - margin.top - margin.bottom;

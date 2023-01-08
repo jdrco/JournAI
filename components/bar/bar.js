@@ -20,7 +20,7 @@ class Bar extends React.Component {
     select(node)
       .selectAll('.bar')
       .data(data)
-      .transition(t)
+      //.transition(t)
       .attr('y', d => yScale(d.value))
       .attr('height', d => height - yScale(d.value));
   }

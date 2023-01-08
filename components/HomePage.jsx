@@ -4,17 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Donut from './Donut';
 import Input from './Input';
 import { query, collection, onSnapshot } from 'firebase/firestore';
-import { BarChart } from './Barchart';
+import Link from 'next/link';
 
 const HomePage = () => {
   const [entries, setEntries] = useState([]);
   const [user] = useAuthState(auth);
-  console.log(entries);
 
-  const queryRange = (range) => {
-    const curr_date = new Date();
-    const last_date = new Date(curr_date.getTime() - range * 86400000);
-
+  // read from database
+  useEffect(() => {
     const q = query(collection(db, 'entries')); // need to convert
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -22,26 +19,10 @@ const HomePage = () => {
       querySnapshot.forEach((doc) => {
         entriesArr.push({ ...doc.data(), id: doc.id });
       });
-      setEntries(
-        entriesArr.filter(
-          (doc) =>
-            doc.uid === user.uid &&
-            doc.date >= last_date &&
-            doc.date <= curr_date
-        )
-      );
+      setEntries(entriesArr.filter((doc) => doc.uid === user.uid));
     });
 
     return () => unsubscribe();
-  };
-
-  function onClick(range) {
-    queryRange(range);
-  }
-
-  // read from database
-  useEffect(() => {
-    queryRange(1); // always want 1 day data showing on fresh render
   }, []);
 
   // calculation for entries
@@ -154,21 +135,28 @@ const HomePage = () => {
           </div>
 
           <div className=" h-full w-1/2 flex flex-col">
-            <div className="w-full h-1/2"></div>
+            <div className="w-full h-1/2 flex justify-center items-end">
+              <div className="w-3/4 rounded-xl h-56 border border-1 border-gray-200 overflow-auto">
+                {entries.map((entry) => (
+                  <Link href={`/entries/${entry.id}`}>
+                    <div
+                      key={entry.id}
+                      className="h-12 m-[6px] rounded-md border border-1 border-gray-300 text-black text-xs flex items-center"
+                    >
+                      <div className="pl-4 truncate w-1/2 font-bold">
+                        {entry.entry}
+                      </div>
+                      <div className="truncate w-1/2 text-right pr-4 font-light">
+                        {entry.date}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
             <Input user={user} />
           </div>
         </div>
-        <div className="flex">
-          <button onClick={() => onClick(1)}>1 Day</button>
-          <button onClick={() => onClick(7)}>1 Week</button>
-          <button onClick={() => onClick(30)}>1 Month</button>
-          <button onClick={() => onClick(90)}>3 Months</button>
-          <button onClick={() => onClick(180)}>6 Months</button>
-        </div>
-        <div>
-          <Donut data={data} />
-        </div>
-        <Input user={user} />
       </div>
     </>
   );

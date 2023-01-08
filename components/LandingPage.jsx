@@ -1,8 +1,9 @@
-import React from "react";
-import { BsFillQuestionCircleFill } from "react-icons/bs";
-import { GiUnicorn } from "react-icons/gi";
-import { auth } from "../firebase/firebaseApp";
-import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import React from 'react';
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { GiUnicorn } from 'react-icons/gi';
+import { auth } from '../firebase/firebaseApp';
+import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
+import Link from 'next/link';
 
 const LandingPage = () => {
   const provider = new GoogleAuthProvider();
@@ -15,11 +16,13 @@ const LandingPage = () => {
     <div className="w-screen h-screen flex flex-col items-center backdrop-opacity-100 bg-gradient-to-r from-slate-300 to-slate-50">
       <div className="flex justify-between items-center h-[8%] w-screen bg-transparent p-10 sm:p-12">
         <div>
-          <GiUnicorn size={"2em"} />
+          <GiUnicorn size={'2em'} />
         </div>
-        <button>
-          <BsFillQuestionCircleFill size={"2em"} />
-        </button>
+        <Link href="https://devpost.com/software/journai-8wl03y">
+          <button>
+            <BsFillQuestionCircleFill size={'2em'} />
+          </button>
+        </Link>
       </div>
 
       <div className="bg-transparent w-screen h-[92%] flex flex-col lg:flex-row">
@@ -41,14 +44,10 @@ const LandingPage = () => {
         <div className="bg-transparent text-center flex flex-col gap-4 items-center h-[50%] lg:h-[100%] lg:w-1/2">
           <img src="/writing.png" alt="Writing" width="200px"></img>
         </div>
-        <div>
-            
-        </div>
+        <div></div>
       </div>
     </div>
   );
 };
 
 export default LandingPage;
-
-

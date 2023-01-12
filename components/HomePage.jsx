@@ -94,24 +94,6 @@ const HomePage = () => {
     },
   };
 
-  const optionsBar = {
-    scales: {
-      xAxes: [
-        {
-          gridLines: {
-            display: false,
-          },
-        },
-      ],
-      yAxes: [
-        {
-          gridLines: {
-            display: false,
-          },
-        },
-      ],
-    },
-  };
   return (
     <>
       <div className="w-screen h-screen flex flex-col items-center">

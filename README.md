@@ -1,3 +1,7 @@
+<h1> Journ.ai </h1>
+
+Journ.ai is a project that was initally created at HackED 2023. You can read about the motivation behind the project and the development process on the [Devpost](https://devpost.com/software/journai-8wl03y) page!
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -10,3 +14,9 @@ npm run dev
 yarn dev
 ```
  Then cd into ml-server and in another terminal run the virtual environment venv using source venv/bin/activate. Then run python3 app.py to start the python server. Then access port:3000 or whatever the local host is and you should be able to run the app.
+
+<h2> Gallery </h2>
+
+Here you can see a flow of a user entering a brief journal entry (The [Devpost](https://devpost.com/software/journai-8wl03y) page has a high res version of this Video!)
+
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/90409929/212502217-ada5ae1b-381b-454b-97cc-d6d0e85e042b.gif)
